@@ -9,7 +9,7 @@ commands:
   setup:
     steps:
       # 実際はここにCircleCIのキャッシュの処理も入る
-      - setup
+      - checkout
       - run: bundle install --path vendor/bundle
 
 jobs:
