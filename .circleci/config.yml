@@ -1,0 +1,42 @@
+version: 2.1
+
+executors:
+  default:
+    docker:
+      - image: circleci/ruby
+
+commands:
+  setup:
+    steps:
+      # 実際はここにCircleCIのキャッシュの処理も入る
+      - setup
+      - run: bundle install --path vendor/bundle
+
+jobs:
+  bundle:
+    executor: default
+    steps:
+      - setup
+  test:
+    executor: default
+    steps:
+      - setup
+      - run: bundle exec rails test
+  assets:
+    executor: default
+    steps:
+      - setup
+      - run: bundle exec rails assets:precompile
+
+workflows:
+  all:
+    jobs:
+      - bundle
+      - test:
+          requires:
+            - bundle
+      - assets:
+          requires:
+            - bundle
+      - build
+
