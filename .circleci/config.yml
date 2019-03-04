@@ -18,14 +18,23 @@ jobs:
     executor: default
     steps:
       - setup
+      - persist_to_workspace:
+          root: vendor
+          paths:
+            - bundle
+
   test:
     executor: default
     steps:
+      - attach_workspace:
+          at: vendor/bundle
       - setup
       - run: bundle exec rails test
   assets:
     executor: default
     steps:
+      - attach_workspace:
+          at: vendor/bundle
       - setup
       - run: bundle exec rails assets:precompile
 
