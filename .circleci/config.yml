@@ -10,7 +10,7 @@ commands:
     steps:
       - checkout
       - attach_workspace:
-          at: vendor/bundle
+          at: ~/vendor/bundle
       - run: gem install bundler -v '2.0.1'
       - run: bundle install --path vendor/bundle
 
@@ -19,8 +19,6 @@ jobs:
     executor: default
     steps:
       - checkout
-      - attach_workspace:
-          at: vendor/bundle
       - run: gem install bundler -v '2.0.1'
       - run: bundle install --path vendor/bundle
       - persist_to_workspace:
