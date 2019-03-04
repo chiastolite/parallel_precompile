@@ -10,6 +10,7 @@ commands:
     steps:
       # 実際はここにCircleCIのキャッシュの処理も入る
       - checkout
+      - run: gem install bundler -v '2.0.1'
       - run: bundle install --path vendor/bundle
 
 jobs:
