@@ -8,8 +8,9 @@ executors:
 commands:
   setup:
     steps:
-      # 実際はここにCircleCIのキャッシュの処理も入る
       - checkout
+      - attach_workspace:
+          at: vendor/bundle
       - run: gem install bundler -v '2.0.1'
       - run: bundle install --path vendor/bundle
 
@@ -17,7 +18,11 @@ jobs:
   bundle:
     executor: default
     steps:
-      - setup
+      - checkout
+      - attach_workspace:
+          at: vendor/bundle
+      - run: gem install bundler -v '2.0.1'
+      - run: bundle install --path vendor/bundle
       - persist_to_workspace:
           root: vendor
           paths:
@@ -26,15 +31,11 @@ jobs:
   test:
     executor: default
     steps:
-      - attach_workspace:
-          at: vendor/bundle
       - setup
       - run: bundle exec rails test
   assets:
     executor: default
     steps:
-      - attach_workspace:
-          at: vendor/bundle
       - setup
       - run: bundle exec rails assets:precompile
 
