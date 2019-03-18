@@ -10,7 +10,7 @@ commands:
     steps:
       - checkout
       - attach_workspace:
-          at: ~/vendor/bundle
+          at: .
       - run: gem install bundler -v '2.0.1'
       - run: bundle install -j 4 --path vendor/bundle
 
