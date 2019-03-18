@@ -21,6 +21,7 @@ jobs:
       - checkout
       - run: gem install bundler -v '2.0.1'
       - run: bundle install --path vendor/bundle
+      - run: find .
       - persist_to_workspace:
           root: ~/
           paths:
