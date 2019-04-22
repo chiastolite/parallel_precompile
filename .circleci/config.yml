@@ -9,10 +9,13 @@ commands:
   setup:
     steps:
       - checkout
-      - attach_workspace:
-          at: .
       - run: gem install bundler -v '2.0.1'
-      - run: bundle install -j 4 --path vendor/bundle
+      - restore_cache:
+          keys:
+            - gem-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - gem-cache-v1-{{ arch }}-{{ .Branch }}
+            - gem-cache-v1
+      - run: bundle check || bundle install -j 4 --path vendor/bundle
 
 jobs:
   bundle:
@@ -20,13 +23,17 @@ jobs:
     steps:
       - checkout
       - run: gem install bundler -v '2.0.1'
+      - restore_cache:
+          keys:
+            - gem-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - gem-cache-v1-{{ arch }}-{{ .Branch }}
+            - gem-cache-v1
       - run: bundle install -j 4 --path vendor/bundle
-      - run: pwd
-      - run: find .
-      - persist_to_workspace:
-          root: .
+      - save_cache:
+          key: gem-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
+
 
   test:
     executor: default
