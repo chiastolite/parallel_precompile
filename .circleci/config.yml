@@ -54,12 +54,12 @@ jobs:
     executor: default
     steps:
       - setup
-      - run: bundle exec rails test
+      - run: bin/rails test
   assets:
     executor: default
     steps:
       - setup
-      - run: bundle exec rails assets:precompile
+      - run: bin/rails assets:precompile
 
 workflows:
   all:
