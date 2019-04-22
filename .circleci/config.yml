@@ -3,7 +3,7 @@ version: 2.1
 executors:
   default:
     docker:
-      - image: circleci/ruby:latest-node-browsers
+      - image: circleci/ruby:2.6.3-node-browsers
 
 commands:
   setup:
