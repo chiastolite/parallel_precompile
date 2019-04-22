@@ -44,7 +44,7 @@ jobs:
       - save_cache:
           key: gem-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
-            - ~/.bundle
+            - vendor/bundle
       - save_cache:
           key: yarn-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
