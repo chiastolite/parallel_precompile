@@ -16,7 +16,7 @@ commands:
             - gem-cache-v1-{{ arch }}-{{ .Branch }}
             - gem-cache-v1
       - run: bundle install --path "vendor/bundle"
-
+      - run: bin/spring stop
       - restore_cache:
           keys:
             - yarn-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
