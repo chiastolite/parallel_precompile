@@ -4,6 +4,8 @@ executors:
   default:
     docker:
       - image: circleci/ruby:2.6.3-node-browsers
+    environment:
+      DISABLE_SPRING: true
 
 commands:
   setup:
@@ -16,7 +18,6 @@ commands:
             - gem-cache-v1-{{ arch }}-{{ .Branch }}
             - gem-cache-v1
       - run: bundle install --path "vendor/bundle"
-      - run: bin/spring stop
       - restore_cache:
           keys:
             - yarn-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
